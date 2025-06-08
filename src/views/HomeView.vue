@@ -2,23 +2,23 @@
 import { ref, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 
-interface Event {
+interface Hotel {
   id: number
   name: string
   place: string
   time: string
 }
 
-const events = ref<Event[]>([])
+const hotels = ref<Hotel[]>([])
 
-const fetchEvents = async () => {
-  const response = await fetch('/api/events')
+const fetchHotels = async () => {
+  const response = await fetch('/api/hotels')
   const data = await response.json()
-  events.value = data
+  hotels.value = data
 }
 
 onMounted(() => {
-  fetchEvents()
+  fetchHotels()
 })
 
 </script>
@@ -27,16 +27,16 @@ onMounted(() => {
   <main>
 
     <div>
-      <RouterLink to="/event">Buat Event</RouterLink>
+      <RouterLink to="/hotel">Buat Event</RouterLink>
     </div>
     <div>
       <ul>
-        <li v-for="event in events" :key="event.id">
-          <div>{{ event.name }}</div>
-          <div>{{ event.place }}</div>
-          <div>{{ new Date(Number(event.time) * 1000).toLocaleString() }}</div>
+        <li v-for="hotel in hotels" :key="hotel.id">
+          <div>{{ hotel.name }}</div>
+          <div>{{ hotel.place }}</div>
+          <div>{{ new Date(Number(hotel.time) * 1000).toLocaleString() }}</div>
           <div>
-            <RouterLink :to="`/event/${event.id}`">Edit</RouterLink>
+            <RouterLink :to="`/hotel/${hotel.id}`">Edit</RouterLink>
           </div>
         </li>
       </ul>

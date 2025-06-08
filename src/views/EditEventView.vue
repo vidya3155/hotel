@@ -1,27 +1,48 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { onMounted, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 const router = useRouter();
 
+const route = useRoute()
+const id = route.params.id
+
+// Declare reactive variables
 const name = ref('')
 const place = ref('')
 const time = ref('')
 
+// Optional: Fetch existing data for editing
+onMounted(async () => {
+  if (id) {
+    const response = await fetch(`/api/hotels/${id}`)
+    const data = await response.json()
+    name.value = data.name
+    place.value = data.place
+    // Convert timestamp to datetime-local format
+    const date = new Date(data.time * 1000)
+    time.value = date.toISOString().slice(0, 16)
+  }
+})
+
 const saveData = async () => {
-    const newEvent = JSON.stringify({
+    const payload = {
         name: name.value,
         place: place.value,
         time: Date.parse(time.value)/1000,
-    })
+    }
 
-    const response = await fetch('/api/events', {
-        method:'POST',
-        body: newEvent,
-    })
-    const data = await response.json()
+    // Use PUT/PATCH for editing if ID exists
+    const method = id ? 'PUT' : 'POST'
+    const url = id ? `/api/hotels/${id}` : '/api/hotels'
+    
+    await fetch(url, {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+})
 
-    router.push('/')
+router.push('/')
 }
 </script>
 
@@ -30,15 +51,15 @@ const saveData = async () => {
     <form @submit.prevent="saveData">
         <div>
             <label>Nama</label>
-            <input type="text" v-model="name">
+            <input type="Hotel Bintang Lima" v-model="name">
         </div>
         <div>
             <label>Tempat</label>
-            <input type="text" v-model="place">
+            <input type="Pasuruan" v-model="place">
         </div>
         <div>
             <label>Waktu</label>
-            <input type="datetime-local" v-model="time">
+            <input type="1672531200" v-model="time">
         </div>
 
         <div>
