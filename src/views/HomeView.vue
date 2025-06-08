@@ -33,7 +33,7 @@ const removeEvent = async (id: string) => {
 
 <template>
   <main>
-    
+    <div>Daftar Acara</div>
     <div>
       <RouterLink to="/hotel">Buat Event</RouterLink>
     </div>
