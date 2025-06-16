@@ -10,14 +10,14 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: '/event',
-      name: 'create-event',
-      component: () => import('../views/CreateEventView.vue'),
+      path: '/hotel',
+      name: 'create-hotel',
+      component: () => import('../views/CreateHotelView.vue'),
     },
     {
-      path: '/event/:id',
-      name: 'edit-event',
-      component: () => import('../views/EditEventView.vue'),
+      path: '/hotel/:id',
+      name: 'edit-hotel',
+      component: () => import('../views/EditHotelView.vue'),
     },
     {
       path: '/about',

@@ -21,8 +21,8 @@ onMounted(() => {
   fetchHotels()
 })
 
-const removeEvent = async (id: string) => {
-  const response = await fetch(`/api/events/${id}`, {
+const removeHotel = async (id: string) => {
+  const response = await fetch(`/api/hotels/${id}`, {
     method: 'DELETE',
   })
   if (response.ok) {
@@ -47,7 +47,7 @@ const removeEvent = async (id: string) => {
             <RouterLink :to="`/hotel/${hotel.id}`">Edit</RouterLink>
           </div>
           <div>More actions
-            <button @click="removeEvent(hotel.id)">Hapus Data</button>
+            <button @click="removeHotel(hotel.id)">Hapus Data</button>
           </div>
         </li>
       </ul>

@@ -9,15 +9,15 @@ const place = ref('')
 const time = ref('')
 
 const saveData = async () => {
-    const newEvent = JSON.stringify({
+    const newHotel = JSON.stringify({
         name: name.value,
         place: place.value,
         time: Date.parse(time.value)/1000,
     })
 
-    const response = await fetch('/api/events', {
+    const response = await fetch('/api/hotels', {
         method:'POST',
-        body: newEvent,
+        body: newHotel,
     })
     const data = await response.json()
 
