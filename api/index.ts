@@ -45,4 +45,6 @@ app.delete('/api/hotels/:id', async (c) => {
   return c.json(hotel)
 })
 
+app.get('*', (c) => c.env.ASSETS.fetch(c.req.raw))
+
 export default app

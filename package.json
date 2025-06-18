@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.10",
-    "hono": "^4.7.11",
+    "hono": "^4.8.0",
     "pinia": "^3.0.3",
     "tailwindcss": "^4.1.10",
     "vue": "^3.5.16",
@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "^0.1.21",
-    "@cloudflare/workers-types": "^4.20250617.0",
+    "@cloudflare/workers-types": "^4.20250618.0",
     "@tsconfig/node22": "^22.0.2",
     "@types/node": "^22.15.32",
     "@vitejs/plugin-vue": "^5.2.4",

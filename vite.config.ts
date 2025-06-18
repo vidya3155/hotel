@@ -12,7 +12,8 @@ export default defineConfig({
     vue(),
     vueDevTools(),
     cloudflare(),
-  ],
+    tailwindcss(),
+],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
