@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { Button } from '@/components/button'
+import { Input } from '@/components/button/ui/Input.vue'
 
 const router = useRouter();
 
@@ -47,23 +49,25 @@ router.push('/')
 </script>
 
 <template>
-    <h1>Edit Event Baru</h1>
-    <form @submit.prevent="saveData">
-        <div>
-            <label>Nama</label>
-            <input type="Hotel Bintang Lima" v-model="name">
-        </div>
-        <div>
-            <label>Tempat</label>
-            <input type="Pasuruan" v-model="place">
-        </div>
-        <div>
-            <label>Waktu</label>
-            <input type="1672531200" v-model="time">
-        </div>
-
-        <div>
-            <input type="submit">
-        </div>
-    </form>
+    <div class="container px-4 py-6 mx-auto w-lg">
+        <h1 class="text-lg sm:text-2xl text-center">Edit Event</h1>
+        <form @submit.prevent="saveData">
+            <div class="w-full">
+                <label>Nama</label>
+                <Input type="text" v-model="name" />
+            </div>
+            <div>
+                <label>Tempat</label>
+                <Input type="text" v-model="place" />
+            </div>
+            <div>
+                <label>Waktu</label>
+                <Input type="datetime-local" v-model="time" />
+            </div>
+    
+            <div class="mt-3">
+                <Button type="submit">Update</Button>
+            </div>
+        </form>
+    </div>
 </template>
