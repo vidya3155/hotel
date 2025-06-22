@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { Button } from '@/components/button'
-import { Input } from '@/components/button/ui/Input.vue'
+import { Input } from '@/components/button/ui/input'
 
 const router = useRouter();
 
