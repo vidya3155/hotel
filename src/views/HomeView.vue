@@ -1,39 +1,73 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { RouterLink } from 'vue-router'
 
 interface Hotel {
   id: string
   name: string
   place: string
-  time: string
+  time: string // disimpan sebagai UNIX timestamp dalam string
 }
 
 const hotels = ref<Hotel[]>([])
+const editingHotel = ref<Hotel | null>(null)
+const loading = ref(false)
 
 const fetchHotels = async () => {
-  const response = await fetch('/api/hotels')
-  const data = await response.json()
-  hotels.value = data
+  loading.value = true
+  try {
+    const response = await fetch('/api/hotels')
+    const data = await response.json()
+    hotels.value = data
+  } catch (error) {
+    console.error('Gagal mengambil data hotel:', error)
+  } finally {
+    loading.value = false
+  }
 }
 
-onMounted(() => {
-  fetchHotels()
-})
+onMounted(fetchHotels)
 
 const removeHotel = async (id: string) => {
   const response = await fetch(`/api/hotels/${id}`, {
     method: 'DELETE',
   })
+  if (response.ok) fetchHotels()
+}
+
+const startEditing = (hotel: Hotel) => {
+  editingHotel.value = {
+    ...hotel,
+    time: new Date(Number(hotel.time) * 1000).toISOString().slice(0, 16), // convert to input-compatible
+  }
+}
+
+const cancelEdit = () => {
+  editingHotel.value = null
+}
+
+const saveEdit = async () => {
+  if (!editingHotel.value) return
+
+  const updatedHotel = {
+    ...editingHotel.value,
+    time: Math.floor(new Date(editingHotel.value.time).getTime() / 1000).toString(), // back to UNIX timestamp string
+  }
+
+  const response = await fetch(`/api/hotels/${updatedHotel.id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(updatedHotel),
+  })
+
   if (response.ok) {
-    fetchHotels() // Refresh the list after deletion
+    await fetchHotels()
+    editingHotel.value = null
   }
 }
 </script>
 
 <template>
-  <main class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">Add commentMore actions
-    <!-- Background Glow Animation -->
+  <main class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
     <div class="absolute inset-0 -z-10 animate-gradient opacity-30"></div>
 
     <h1 class="text-4xl font-bold text-white mb-6">Daftar Hotel</h1>
@@ -45,7 +79,9 @@ const removeHotel = async (id: string) => {
       Buat Hotel
     </RouterLink>
 
-    <div class="grid gap-8 w-full px-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-6xl">
+    <div v-if="loading" class="text-white mb-8">Memuat data hotel...</div>
+
+    <div v-else class="grid gap-8 w-full px-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-6xl">
       <div
         v-for="hotel in hotels"
         :key="hotel.id"
@@ -57,9 +93,21 @@ const removeHotel = async (id: string) => {
           Tanggal: {{ new Date(Number(hotel.time) * 1000).toLocaleString() }}
         </p>
         <div class="flex justify-between">
-          <RouterLink :to="`/eshop/${hotel.id}`" class="text-blue-400 hover:underline">Edit</RouterLink>
+          <button @click="startEditing(hotel.id)" class="text-blue-400 hover:underline">Edit</button>
           <button @click="removeHotel(hotel.id)" class="text-red-400 hover:underline">Hapus</button>
         </div>
+      </div>
+    </div>
+
+    <!-- Form Edit -->
+    <div v-if="editingHotel" class="mt-10 w-full max-w-xl bg-white/20 p-6 rounded-xl text-white">
+      <h2 class="text-2xl mb-4 font-bold">Edit Hotel</h2>
+      <input v-model="editingHotel.name" placeholder="Nama Hotel" class="w-full mb-2 p-2 rounded bg-gray-800 text-white border border-white/30" />
+      <input v-model="editingHotel.place" placeholder="Tempat" class="w-full mb-2 p-2 rounded bg-gray-800 text-white border border-white/30" />
+      <input v-model="editingHotel.time" type="datetime-local" class="w-full mb-4 p-2 rounded bg-gray-800 text-white border border-white/30" />
+      <div class="flex justify-between">
+        <button @click="saveEdit" class="bg-green-600 px-4 py-2 rounded text-white hover:bg-green-700">Simpan</button>
+        <button @click="cancelEdit" class="text-red-400 hover:underline">Batal</button>
       </div>
     </div>
   </main>
@@ -77,7 +125,6 @@ const removeHotel = async (id: string) => {
     background-position: 0% 50%;
   }
 }
-
 .animate-gradient {
   background: linear-gradient(270deg, #1e3a8a, #9333ea, #06b6d4);
   background-size: 600% 600%;
