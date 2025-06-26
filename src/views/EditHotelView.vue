@@ -5,10 +5,10 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
 const router = useRouter()
+
 const route = useRoute()
 const id = route.params.id
 
-// Declare reactive variables
 const name = ref('')
 const place = ref('')
 const time = ref('')
@@ -24,10 +24,8 @@ const saveData = async () => {
     method: 'PUT',
     body: event,
   })
-
-  if (response.ok) {
+  const data = await response.json()
     router.push('/')
-  }
 }
 
 onMounted(() => {
