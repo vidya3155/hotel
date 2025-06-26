@@ -93,7 +93,7 @@ const saveEdit = async () => {
           Tanggal: {{ new Date(Number(hotel.time) * 1000).toLocaleString() }}
         </p>
         <div class="flex justify-between">
-          <button @click="startEditing(hotel.id)" class="text-blue-400 hover:underline">Edit</button>
+          <button @click="startEditing(hotel)" class="text-blue-400 hover:underline">Edit</button>
           <button @click="removeHotel(hotel.id)" class="text-red-400 hover:underline">Hapus</button>
         </div>
       </div>
