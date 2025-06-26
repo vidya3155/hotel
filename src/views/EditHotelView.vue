@@ -63,3 +63,23 @@ onMounted(() => {
         </form>
     </div>
 </template>
+
+<style scoped>
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  background: linear-gradient(270deg, #1e3a8a, #06b6d4);
+  background-size: 600% 600%;
+  animation: gradient 10s ease infinite;
+}
+</style>
