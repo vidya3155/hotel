@@ -17,7 +17,7 @@ const saveData = async () => {
   const event = JSON.stringify({
     name: name.value,
     place: place.value,
-    time: Date.parse(time.value) / 1000,
+    time: Date.parse(time.value)/1000,
   })
 
   const response = await fetch(`/api/hotels/${id}`, {
@@ -66,7 +66,7 @@ onMounted(() => {
         </div>
       </form>
     </div>
-  </main>Add commentMore actions
+  </main>
 </template>
 
 <style scoped>
