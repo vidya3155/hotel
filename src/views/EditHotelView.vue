@@ -40,33 +40,27 @@ onMounted(() => {
 </script>
 
 <template>
-<main class="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 overflow-hidden">Add commentMore actions
-    <!-- Animated Background -->
-    <div class="absolute inset-0 -z-10 animate-gradient opacity-30"></div>
-
-    <div class="bg-white/10 backdrop-blur-md rounded-xl border border-white/20 shadow-xl p-8 w-full max-w-xl text-white">
-      <h1 class="text-3xl font-bold text-center mb-6">Edit Hotel</h1>
-      <form @submit.prevent="saveData" class="space-y-4">
-        <div>
-          <label class="block mb-1 text-sm font-medium">Nama</label>
-          <Input type="text" v-model="name" class="w-full text-black" />
-        </div>
-        <div>
-          <label class="block mb-1 text-sm font-medium">Tempat</label>
-          <Input type="text" v-model="place" class="w-full text-black" />
-        </div>
-        <div>
-          <label class="block mb-1 text-sm font-medium">Waktu</label>
-          <Input type="datetime-local" v-model="time" class="w-full text-black" />
-        </div>
-        <div class="pt-4 text-center">
-          <Button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition">
-            Update
-          </Button>
-        </div>
-      </form>
+    <div class="container px-4 py-6 mx-auto w-lg">Add commentMore actions
+        <h1 class="text-lg sm:text-2xl text-center">Edit Event</h1>
+        <form @submit.prevent="saveData">
+            <div class="w-full">
+                <label>Nama</label>
+                <Input type="text" v-model="name" />
+            </div>
+            <div>
+                <label>Tempat</label>
+                <Input type="text" v-model="place" />
+            </div>
+            <div>
+                <label>Waktu</label>
+                <Input type="datetime-local" v-model="time" />
+            </div>
+    
+            <div class="mt-3">
+                <Button type="submit">Update</Button>
+            </div>
+        </form>
     </div>
-  </main>
 </template>
 
 <style scoped>
