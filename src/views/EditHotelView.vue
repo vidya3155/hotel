@@ -33,7 +33,7 @@ const saveData = async () => {
     time: Date.parse(time.value) / 1000,
   })
 
-  const response = await fetch(`/api/eshops/${id}`, {
+  const response = await fetch(`/api/hotels/${id}`, {
     method: 'PUT',
     body: event,
   })
