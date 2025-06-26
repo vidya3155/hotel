@@ -13,19 +13,6 @@ const name = ref('')
 const place = ref('')
 const time = ref('')
 
-// Optional: Fetch existing data for editing
-onMounted(async () => {
-  if (id) {
-    const response = await fetch(`/api/hotels/${id}`)
-    const data = await response.json()
-    name.value = data.name
-    place.value = data.place
-    // Convert timestamp to datetime-local format
-    const date = new Date(data.time * 1000)
-    time.value = date.toISOString().slice(0, 16)
-  }
-})
-
 const saveData = async () => {
   const event = JSON.stringify({
     name: name.value,
